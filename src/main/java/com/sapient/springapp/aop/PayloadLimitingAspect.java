@@ -16,7 +16,7 @@ public class PayloadLimitingAspect {
 	final Logger logger = LoggerFactory.getLogger(PayloadLimitingAspect.class);	
 	
     @Around("within(com.sapient.springapp..*)")
-    public Object logAfter(ProceedingJoinPoint  joinPoint) throws Exception,Throwable
+    public Object limitPayload(ProceedingJoinPoint  joinPoint) throws Exception,Throwable
     {
     	logger.info("Annotation driven:Around advice");
     	  Object[] args=joinPoint.getArgs();
