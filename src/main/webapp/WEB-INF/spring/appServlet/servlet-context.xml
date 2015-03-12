@@ -38,6 +38,7 @@
  	<aop:aspectj-autoproxy />
  	<context:component-scan base-package="com.sapient.springapp.aop" />
  	<beans:bean id="loggingAspect" class="com.sapient.springapp.aop.SpringAppLoggingAspect" />
+ 	<beans:bean id="payloadLimitingAspect" class="com.sapient.springapp.aop.PayloadLimitingAspect" /> 	
  	
  	
   	<!-- turn on declarative caching--> 

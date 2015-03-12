@@ -15,13 +15,13 @@ public class SpringAppLoggingAspect {
 	final Logger logger = LoggerFactory.getLogger(SpringAppLoggingAspect.class);	
 
     //@Before("execution(* com.sapient.springapp.jpa.PolicyServiceImpl.*(..))")
-	@Before("within(com.sapient.springapp..*)")
+	//@Before("within(com.sapient.springapp..*)")
     public void logBefore(JoinPoint joinPoint)
     {
         logger.info("Aspect.logBefore() : " + joinPoint.getSignature());
     }
      
-    @After("within(com.sapient.springapp..*)")
+    //@After("within(com.sapient.springapp..*)")
     public void logAfter(JoinPoint joinPoint)
     {
     	logger.info("Aspect.logAfter() : " + joinPoint.getSignature());

@@ -17,6 +17,6 @@ import com.sapient.springapp.domain.Policy;
 @Repository
 public interface PolicyRepository extends PagingAndSortingRepository<Policy, Long> {
 	
-//	List<Policy> findTop20Policies();	
-	
+	public List<Policy> findTop4By();       
+
 }

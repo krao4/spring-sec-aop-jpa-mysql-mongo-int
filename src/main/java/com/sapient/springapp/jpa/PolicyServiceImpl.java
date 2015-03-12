@@ -37,7 +37,8 @@ public class PolicyServiceImpl implements PolicyService {
 	@Cacheable(value="policies", cacheManager="cacheManager")
 	@Transactional(readOnly=true)
 	public List<Policy> findAll() {
-		return Lists.newArrayList(policyRepository.findAll());
+		return Lists.newArrayList(policyRepository.findTop4By());		
+		//return Lists.newArrayList(policyRepository.findAll());
 	}
 
 	@Transactional(readOnly=true)
