@@ -18,36 +18,41 @@ public class PayloadLimitingAspect {
     @Around("within(com.sapient.springapp..*)")
     public Object limitPayload(ProceedingJoinPoint  joinPoint) throws Exception,Throwable
     {
-    	logger.info("Annotation driven:Around advice");
-    	  Object[] args=joinPoint.getArgs();
-    	  if(args.length>0){
-    	  System.out.print("Arguments passed:");
-    	   for (int i = 0; i < args.length; i++) {
-    	    System.out.print("Arg"+(i+1)+":"+args[i]);
-    	    args[i]=":Annotation driven argument";
-    	   }
-    	  }
-    	  Object result=null;
-		
-			result = joinPoint.proceed(args);
-			
-			//Do something with result size
-			logger.info("Result size"+result.toString().length());
-			//Do something with result byte size
-			logger.info("Result byte size"+result.toString().getBytes().length);
-			
-			//Check return object type and results being returned , I have taken taken 2 as example to cut the response circuit   
-			if (result instanceof List & ((List)result).size()>=5)
-			{
-				User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			      String name = user.getUsername(); //get logged in username
-				
-			      logger.error("WARNING !!!! User "+ name+" get payload is more then allowed size" +((List)result).size());
-				//or create security exception 
+		logger.info("Annotation driven:Around advice");
+		Object[] args = joinPoint.getArgs();
+		if (args.length > 0) {
+			System.out.print("Arguments passed:");
+			for (int i = 0; i < args.length; i++) {
+				System.out.print("Arg" + (i + 1) + ":" + args[i]);
+				// args[i]=":Annotation driven argument";
+			}
+		}
+		Object result = null;
+
+		result = joinPoint.proceed(args);
+
+		if (result != null) {
+			// Do something with result size
+			logger.info("Result size" + result.toString().length());
+			// Do something with result byte size
+			logger.info("Result byte size"
+					+ result.toString().getBytes().length);
+
+			// Check return object type and results being returned , I have
+			// taken taken 2 as example to cut the response circuit
+			if (result instanceof List && ((List) result).size() >= 20) {
+				User user = (User) SecurityContextHolder.getContext()
+						.getAuthentication().getPrincipal();
+				String name = user.getUsername(); // get logged in username
+
+				logger.error("WARNING !!!! User " + name
+						+ " get payload is more then allowed size"
+						+ ((List) result).size());
+				// or create security exception
 				throw new IllegalStateException();
 			}
-		
-    	  return result;
-    }	
-	
+		}
+
+		return result;
+	}
 }
