@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -15,7 +16,17 @@ public class PayloadLimitingAspect {
 
 	final Logger logger = LoggerFactory.getLogger(PayloadLimitingAspect.class);	
 	
-    @Around("within(com.sapient.springapp..*)")
+	private String listSizeLimit;
+	
+    public String getListSizeLimit() {
+		return listSizeLimit;
+	}
+
+	public void setListSizeLimit(String listSizeLimit) {
+		this.listSizeLimit = listSizeLimit;
+	}
+
+	@Around("within(com.sapient.springapp..*)")
     public Object limitPayload(ProceedingJoinPoint  joinPoint) throws Exception,Throwable
     {
 		logger.info("Annotation driven:Around advice");
@@ -40,7 +51,7 @@ public class PayloadLimitingAspect {
 
 			// Check return object type and results being returned , I have
 			// taken taken 2 as example to cut the response circuit
-			if (result instanceof List && ((List) result).size() >= 20) {
+			if (result instanceof List && ((List) result).size() >= Integer.parseInt(listSizeLimit)) {
 				User user = (User) SecurityContextHolder.getContext()
 						.getAuthentication().getPrincipal();
 				String name = user.getUsername(); // get logged in username

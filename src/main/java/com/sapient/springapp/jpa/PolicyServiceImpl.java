@@ -37,7 +37,12 @@ public class PolicyServiceImpl implements PolicyService {
 	@Cacheable(value="policies", cacheManager="cacheManager")
 	@Transactional(readOnly=true)
 	public List<Policy> findAll() {
-		return Lists.newArrayList(policyRepository.findTop4By());		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return Lists.newArrayList(policyRepository.findTop10By());		
 		//return Lists.newArrayList(policyRepository.findAll());
 	}
 
@@ -68,14 +73,14 @@ public class PolicyServiceImpl implements PolicyService {
 	@Transactional(readOnly=true, timeout=1)
 	public List<Policy> findAll() {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return Lists.newArrayList(policyRepository.findAll());
 	}
-*/		
+		*/
 	
 	/**
 	 * Demonstrate top20 records fetch

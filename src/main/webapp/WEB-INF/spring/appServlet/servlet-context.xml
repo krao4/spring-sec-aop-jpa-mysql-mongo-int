@@ -33,14 +33,6 @@
 	
  	<security:global-method-security pre-post-annotations="enabled" />
  	
- 	
- 	<!-- AOP configuration -->	
- 	<aop:aspectj-autoproxy />
- 	<context:component-scan base-package="com.sapient.springapp.aop" />
- 	<beans:bean id="loggingAspect" class="com.sapient.springapp.aop.SpringAppLoggingAspect" />
- 	<beans:bean id="payloadLimitingAspect" class="com.sapient.springapp.aop.PayloadLimitingAspect" /> 	
- 	
- 	
   	<!-- turn on declarative caching--> 
     <cache:annotation-driven />
 
@@ -70,5 +62,12 @@
 	    </beans:property>
 	</beans:bean>	
 
+ 	<!-- AOP configuration -->
+	<aop:aspectj-autoproxy />
+	<context:component-scan base-package="com.sapient.springapp.aop" />
+	<beans:bean id="loggingAspect" class="com.sapient.springapp.aop.SpringAppLoggingAspect" />
+	<beans:bean id="payloadLimitingAspect" class="com.sapient.springapp.aop.PayloadLimitingAspect">
+		<beans:property name="listSizeLimit" value="30" />
+	</beans:bean> 		
 
 </beans:beans>
